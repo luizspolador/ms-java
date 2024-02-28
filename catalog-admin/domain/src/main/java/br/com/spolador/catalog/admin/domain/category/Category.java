@@ -1,9 +1,9 @@
 package br.com.spolador.catalog.admin.domain.category;
 
 import br.com.spolador.catalog.admin.domain.AggregateRoot;
+import br.com.spolador.catalog.admin.domain.validation.ValidationHandler;
 
 import java.time.Instant;
-import java.util.UUID;
 
 public class Category extends AggregateRoot<CategoryID> {
     private String name;
@@ -37,6 +37,11 @@ public class Category extends AggregateRoot<CategoryID> {
         return new Category(id, aName, aDescription, isactive, now, now, null);
     }
 
+    @Override
+    public void validate(final ValidationHandler handler){
+        new CategoryValidator(this, handler).validate();
+    }
+
     public CategoryID getId() {
         return id;
     }
@@ -64,4 +69,6 @@ public class Category extends AggregateRoot<CategoryID> {
     public Instant getDeletedAt() {
         return deletedAt;
     }
+
+
 }
