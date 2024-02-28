@@ -8,6 +8,9 @@ public class CategoryValidator extends Validator {
 
     private final Category category;
 
+    public static final int NAME_MAX_LENGTH = 255;
+    public static final int NAME_MIN_LENGTH = 3;
+
     public CategoryValidator(final Category aCategory, ValidationHandler aHandler) {
         super(aHandler);
         this.category = aCategory;
@@ -30,7 +33,7 @@ public class CategoryValidator extends Validator {
         }
 
         final int length = name.trim().length(); // trim() para tirar os espaços vazios e validar o número de caracteres
-        if(length > 255 || length < 3){
+        if(length > NAME_MAX_LENGTH || length < NAME_MIN_LENGTH){
             this.validationHandler().append(new Error("'name' must be between 3 and 255 characters"));
         }
     }
