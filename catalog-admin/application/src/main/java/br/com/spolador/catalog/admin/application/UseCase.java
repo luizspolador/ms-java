@@ -1,8 +1,8 @@
 package br.com.spolador.catalog.admin.application;
 
-public class UseCase {
+import br.com.spolador.catalog.admin.domain.category.Category;
 
-    public Category execute(){
-        return new Category();
-    }
+public abstract class UseCase<IN, OUT> {
+
+    public abstract OUT execute(IN anIn);
 }
