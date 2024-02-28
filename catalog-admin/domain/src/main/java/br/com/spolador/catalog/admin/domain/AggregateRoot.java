@@ -1,4 +1,4 @@
-package br.com.spolador.catalog.admin.domain.category;
+package br.com.spolador.catalog.admin.domain;
 
 public class AggregateRoot<ID extends Identifier> extends Entity<ID>{
 
