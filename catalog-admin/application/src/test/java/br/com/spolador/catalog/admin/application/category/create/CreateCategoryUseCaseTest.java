@@ -21,17 +21,17 @@ public class CreateCategoryUseCaseTest {
 
 
         final var aCommand = CreateCategoryCommand.with(expectedName, expectedDescription, expectedIsActive);
-        final CategoryGateway gateway = Mockito.mock(CategoryGateway.class);
+        final CategoryGateway categoryGateway = Mockito.mock(CategoryGateway.class);
 
-        Mockito.when(gateway.create(Mockito.any())).thenAnswer(returnsFirstArg()); // qd o metodo create for chamado, retorna o primeiro parametro
+        Mockito.when(categoryGateway.create(Mockito.any())).thenAnswer(returnsFirstArg()); // qd o metodo create for chamado, retorna o primeiro parametro
 
-        final var useCase = new CreateCategoryUseCase();
+        final var useCase = new DefaultCreateCategoryUseCase(categoryGateway);
         final var actualOutput = useCase.execute(aCommand);
 
         Assertions.assertNotNull(actualOutput);
-        Assertions.assertNotNull(actualOutput.getId());
+        Assertions.assertNotNull(actualOutput.id());
 
-        Mockito.verify(gateway, Mockito.times(1)).create(Mockito.argThat(aCategory -> {
+        Mockito.verify(categoryGateway, Mockito.times(1)).create(Mockito.argThat(aCategory -> {
                     return Objects.equals(expectedName, aCategory.getName())
                             && Objects.equals(expectedDescription, aCategory.getDescription())
                             && Objects.equals(expectedIsActive, aCategory.isActive())
