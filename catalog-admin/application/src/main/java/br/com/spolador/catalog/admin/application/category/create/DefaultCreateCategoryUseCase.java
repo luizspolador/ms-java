@@ -2,6 +2,7 @@ package br.com.spolador.catalog.admin.application.category.create;
 
 import br.com.spolador.catalog.admin.domain.category.Category;
 import br.com.spolador.catalog.admin.domain.category.CategoryGateway;
+import br.com.spolador.catalog.admin.domain.validation.handler.Notification;
 import br.com.spolador.catalog.admin.domain.validation.handler.ThrowsValidationHandler;
 
 import java.util.Objects;
@@ -20,9 +21,14 @@ public class DefaultCreateCategoryUseCase extends CreateCategoryUseCase{
         final var aDescription = aCommand.description();
         final var isActive = aCommand.isActive();
 
-        final var aCategory = Category.newCategory(aName, aDescription, isActive);
-        aCategory.validate(new ThrowsValidationHandler());
+        final var notification = Notification.create();
 
+        final var aCategory = Category.newCategory(aName, aDescription, isActive);
+        aCategory.validate(notification);
+
+        if(notification.hasErrors()){
+
+        }
         return CreateCategoryOutput.from(this.categoryGateway.create(aCategory));
     }
 }
