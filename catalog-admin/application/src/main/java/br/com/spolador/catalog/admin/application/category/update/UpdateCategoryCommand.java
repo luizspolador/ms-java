@@ -7,7 +7,11 @@ public record UpdateCategoryCommand(
         boolean isActive
 ) {
 
-    public static UpdateCategoryCommand with(final String anId, final String aName, final String aDescription, final boolean isActive){
+    public static UpdateCategoryCommand with(
+            final String anId,
+            final String aName,
+            final String aDescription,
+            final boolean isActive){
         return new UpdateCategoryCommand(anId, aName, aDescription, isActive);
     }
 }

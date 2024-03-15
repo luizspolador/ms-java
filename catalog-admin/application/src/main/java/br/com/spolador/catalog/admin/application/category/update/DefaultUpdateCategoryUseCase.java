@@ -12,6 +12,8 @@ import io.vavr.control.Either;
 import java.util.Objects;
 import java.util.function.Supplier;
 
+import static io.vavr.API.Try;
+
 public class DefaultUpdateCategoryUseCase extends UpdateCategoryUseCase{
 
     private final CategoryGateway categoryGateway;
@@ -29,7 +31,7 @@ public class DefaultUpdateCategoryUseCase extends UpdateCategoryUseCase{
 
         final var aCategory = this.categoryGateway.findById(anId).orElseThrow(notFound(anId));
 
-        final var notification = Notification .create();
+        final var notification = Notification.create();
 
         aCategory.update(aName, aDescription, isActive).validate(notification);
 
@@ -37,7 +39,7 @@ public class DefaultUpdateCategoryUseCase extends UpdateCategoryUseCase{
     }
 
     private Either<Notification, UpdateCategoryOutput> update(final Category aCategory) {
-        return API.Try(() -> this.categoryGateway.update(aCategory))
+        return Try(() -> this.categoryGateway.update(aCategory))
                 .toEither()
                 .bimap(Notification::create, UpdateCategoryOutput::from);
     }

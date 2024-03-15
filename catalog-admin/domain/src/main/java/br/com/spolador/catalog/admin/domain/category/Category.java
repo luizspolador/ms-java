@@ -5,7 +5,7 @@ import br.com.spolador.catalog.admin.domain.validation.ValidationHandler;
 
 import java.time.Instant;
 
-public class Category extends AggregateRoot<CategoryID> {
+public class Category extends AggregateRoot<CategoryID> implements Cloneable{
     private String name;
     private String description;
     private boolean active;
@@ -36,6 +36,18 @@ public class Category extends AggregateRoot<CategoryID> {
         final var now = Instant.now();
         final var deletedAt = isactive ? null : now;
         return new Category(id, aName, aDescription, isactive, now, now, deletedAt);
+    }
+
+    public static Category clone(final Category aCategory){
+        return new Category(
+                aCategory.getId(),
+                aCategory.name,
+                aCategory.description,
+                aCategory.isActive(),
+                aCategory.createdAt,
+                aCategory.updatedAt,
+                aCategory.deletedAt
+        );
     }
 
     @Override
@@ -100,4 +112,14 @@ public class Category extends AggregateRoot<CategoryID> {
     }
 
 
+    @Override
+    public Category clone() {
+        try {
+            Category clone = (Category) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }
