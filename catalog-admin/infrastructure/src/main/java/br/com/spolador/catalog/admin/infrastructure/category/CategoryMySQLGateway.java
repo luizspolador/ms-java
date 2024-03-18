@@ -5,6 +5,7 @@ import br.com.spolador.catalog.admin.domain.category.CategoryGateway;
 import br.com.spolador.catalog.admin.domain.category.CategoryID;
 import br.com.spolador.catalog.admin.domain.category.CategorySearchQuery;
 import br.com.spolador.catalog.admin.domain.pagination.Pagination;
+import br.com.spolador.catalog.admin.infrastructure.category.persistence.CategoryJpaEntity;
 import br.com.spolador.catalog.admin.infrastructure.category.persistence.CategoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +21,16 @@ public class CategoryMySQLGateway implements CategoryGateway {
     }
 
     @Override
-    public Category create(Category aCategory) {
-        return null;
+    public Category create(final Category aCategory) {
+        return save(aCategory);
     }
 
     @Override
-    public void deleteById(CategoryID anId) {
+    public void deleteById(final CategoryID anId) {
+        final String anIdValue = anId.getValue();
+        if(this.repository.existsById(anIdValue)) {
+            this.repository.deleteById(anIdValue);
+        }
 
     }
 
@@ -35,12 +40,16 @@ public class CategoryMySQLGateway implements CategoryGateway {
     }
 
     @Override
-    public Category update(Category aCategory) {
-        return null;
+    public Category update(final Category aCategory) {
+        return save(aCategory);
     }
 
     @Override
     public Pagination<Category> findAll(CategorySearchQuery aQuery) {
         return null;
+    }
+
+    private Category save (final Category aCategory){
+        return this.repository.save(CategoryJpaEntity.from(aCategory)).toAggregate();
     }
 }
