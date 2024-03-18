@@ -1,0 +1,32 @@
+server:
+  port: 8080
+  compression: #comprimir toda a resposta que for do mime-type. Melhoria de performance
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+  undertow:
+    threads:
+      worker: 64
+      io: 4 #threads que "escutam" novas conexoes (sockets de entrada) e as jogam para serem processadas em uma fila
+
+spring:
+  datasource:
+    url: jdbc:mysql://${mysql.url}/${mysql.schema}?useSSL=true&serverTimezone=UTC&characterEncoding=UTF-8
+    username: ${mysql.username}
+    password: ${mysql.password}
+    hikari: #responsável por gerenciar o pool de conexões
+      auto-commit: false
+      connection-timeout: 250 #em millisegundos. tempo em que a thread esperará ate que o pool dê uma conexão
+      max-lifetime: 600000 #tempo máxima em que uma conexão pode ficar aberta (10 min) - segurança
+      maximum-pool-size: 20 #máximo de conexões com db
+      minimum-idle: 10
+      pool-name: master
+  jpa:
+    open-in-view: false #abrir uma conexão com db (escopo transacional) desde o controller
+    show-sql: true
+    hibernate:
+      ddl-auto: none #criar e atualizar o schema do db automaticamente
+    properties:
+      "[hibernate.dialect]": org.hibernate.dialect.MySQL5InnoDBDialect
+      "[hibernate.generale_statistics]": false
+      "[hibernate.connection.provider_disables_autocommit]": true
