@@ -1,5 +1,6 @@
 package br.com.spolador.catalog.admin.infrastructure;
 
+
 import br.com.spolador.catalog.admin.infrastructure.configuration.WebServerConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
