@@ -51,4 +51,6 @@ public class CategoryMySQLGatewayTest {
         Assertions.assertEquals(aCategory.getDeletedAt(), actualEntity.getDeletedAt());
         Assertions.assertNull(actualEntity.getDeletedAt());
     }
+
+
 }
