@@ -38,8 +38,27 @@ public class Category extends AggregateRoot<CategoryID> implements Cloneable{
         return new Category(id, aName, aDescription, isactive, now, now, deletedAt);
     }
 
-    public static Category clone(final Category aCategory){
+    public static Category with(
+            final CategoryID anId,
+            final String name,
+            String description,
+            final boolean active,
+            final Instant createdAt,
+            final Instant updatedAt,
+            final Instant deletedAt) {
         return new Category(
+                anId,
+                name,
+                description,
+                active,
+                createdAt,
+                updatedAt,
+                deletedAt
+        );
+    }
+
+    public static Category clone(final Category aCategory){
+        return with(
                 aCategory.getId(),
                 aCategory.name,
                 aCategory.description,
@@ -49,6 +68,8 @@ public class Category extends AggregateRoot<CategoryID> implements Cloneable{
                 aCategory.deletedAt
         );
     }
+
+
 
     @Override
     public void validate(final ValidationHandler handler){
