@@ -67,6 +67,11 @@ public class CategoryMySQLGatewayTest {
         categoryRepository.save(CategoryJpaEntity.from(aCategory));
         Assertions.assertEquals(1, categoryRepository.count());
 
+        final var actualInvalidEntity = categoryRepository.findById(aCategory.getId().getValue()).get();
+        Assertions.assertEquals("Film", actualInvalidEntity.getName());
+        Assertions.assertNull(actualInvalidEntity.getDescription());
+        Assertions.assertEquals(expectedIsActive, actualInvalidEntity.isActive());
+
         final var anUpdatedCategory = aCategory.clone().update(expectedName, expectedDescription, expectedIsActive);
         final var actualCategory = categoryGateway.update(anUpdatedCategory);
 
