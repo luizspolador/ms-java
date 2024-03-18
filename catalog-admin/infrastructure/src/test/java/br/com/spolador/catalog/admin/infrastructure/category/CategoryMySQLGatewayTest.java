@@ -1,6 +1,7 @@
 package br.com.spolador.catalog.admin.infrastructure.category;
 
 import br.com.spolador.catalog.admin.domain.category.Category;
+import br.com.spolador.catalog.admin.domain.category.CategoryID;
 import br.com.spolador.catalog.admin.infrastructure.MySQLGatewayTest;
 import br.com.spolador.catalog.admin.infrastructure.category.persistence.CategoryJpaEntity;
 import br.com.spolador.catalog.admin.infrastructure.category.persistence.CategoryRepository;
@@ -98,5 +99,25 @@ public class CategoryMySQLGatewayTest {
         Assertions.assertNull(actualEntity.getDeletedAt());
     }
 
+    @Test
+    public void givenAPrePersistedCategoryAndValidCategoryId_whenTryToDeleteIt_shouldDeleteCategory(){
+        final var aCategory =  Category.newCategory("Filmes", null, true);
+
+        Assertions.assertEquals(0, categoryRepository.count());
+
+        categoryRepository.save(CategoryJpaEntity.from(aCategory));
+        Assertions.assertEquals(1, categoryRepository.count());
+
+        categoryGateway.deleteById(aCategory.getId());
+        Assertions.assertEquals(0, categoryRepository.count());
+    }
+
+    @Test
+    public void givenAnInvalidCategoryId_whenTryToDeleteIt_shouldDeleteCategory(){
+        Assertions.assertEquals(0, categoryRepository.count());
+
+        categoryGateway.deleteById(CategoryID.from("invalid"));
+        Assertions.assertEquals(0, categoryRepository.count());
+    }
 
 }
