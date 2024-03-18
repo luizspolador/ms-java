@@ -8,3 +8,9 @@ server:
     threads:
       worker: 64
       io: 4 #threads que "escutam" novas conexoes (sockets de entrada) e as jogam para serem processadas em uma fila
+
+spring:
+  datasource:
+    url: jdbc:mysql://${mysql.url}/${mysql.schema}?useSSL=true&serverTimezone=UTC&characterEncoding=UTF-8
+    username: ${mysql.username}
+    password: ${mysql.password}
