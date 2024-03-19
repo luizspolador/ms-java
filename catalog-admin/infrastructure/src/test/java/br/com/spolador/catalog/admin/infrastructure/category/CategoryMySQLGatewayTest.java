@@ -3,7 +3,7 @@ package br.com.spolador.catalog.admin.infrastructure.category;
 import br.com.spolador.catalog.admin.domain.category.Category;
 import br.com.spolador.catalog.admin.domain.category.CategoryID;
 import br.com.spolador.catalog.admin.domain.category.CategorySearchQuery;
-import br.com.spolador.catalog.admin.infrastructure.MySQLGatewayTest;
+import br.com.spolador.catalog.admin.MySQLGatewayTest;
 import br.com.spolador.catalog.admin.infrastructure.category.persistence.CategoryJpaEntity;
 import br.com.spolador.catalog.admin.infrastructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.Assertions;

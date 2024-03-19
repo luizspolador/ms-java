@@ -1,7 +1,7 @@
 package br.com.spolador.catalog.admin.infrastructure.category.persistence;
 
 import br.com.spolador.catalog.admin.domain.category.Category;
-import br.com.spolador.catalog.admin.infrastructure.MySQLGatewayTest;
+import br.com.spolador.catalog.admin.MySQLGatewayTest;
 import org.hibernate.PropertyValueException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
