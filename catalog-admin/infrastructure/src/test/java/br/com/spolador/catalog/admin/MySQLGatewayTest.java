@@ -1,4 +1,4 @@
-package br.com.spolador.catalog.admin.infrastructure;
+package br.com.spolador.catalog.admin;
 
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,23 +20,7 @@ import java.util.Collection;
         @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*[MySQLGateway]") // faz o scan de todas as classes que terminam com 'MySQLGateway'
 })
 @DataJpaTest
-@ExtendWith(MySQLGatewayTest.CleanUpExtensions.class)
+@ExtendWith(CleanUpExtension.class)
 public @interface MySQLGatewayTest {
 
-
-    class CleanUpExtensions implements BeforeEachCallback {
-
-        @Override
-        public void beforeEach(ExtensionContext extensionContext) throws Exception {
-            final var repositories = SpringExtension.getApplicationContext(extensionContext)
-                    .getBeansOfType(CrudRepository.class)
-                    .values();
-
-            cleanUp(repositories);
-        }
-
-        private void cleanUp(final Collection<CrudRepository> rerepositories){
-            rerepositories.forEach(CrudRepository::deleteAll);
-        }
-    }
 }
